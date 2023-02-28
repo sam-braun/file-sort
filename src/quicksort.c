@@ -19,8 +19,8 @@ static void quicksort_helper(void *array, int left, int right, size_t elem_sz,
  */
 static void swap(void *a, void *b, size_t size) {
     // TODO
-    char *a_char = a;
-    char *b_char = b;
+    char *a_char = (char *)a;
+    char *b_char = (char *)b;
     char *temp = malloc(char *);
     for (int i = 0; i < size; i++) {
 	*temp = *a_char;
@@ -29,6 +29,7 @@ static void swap(void *a, void *b, size_t size) {
 	a_char++;
 	b_char++;
     }
+    free(temp);
 }
 
 /**
