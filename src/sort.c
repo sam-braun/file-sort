@@ -9,5 +9,7 @@
 #define MAX_ELEMENTS 1024
 
 int main(int argc, char **argv) {
-    return EXIT_SUCCESS;
+   	// main method
+	       
+	return EXIT_SUCCESS;
 }
