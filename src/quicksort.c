@@ -8,6 +8,56 @@ static int lomuto(void *array, int left, int right, size_t elem_sz,
                   int (*cmp) (const void*, const void*));
 static void quicksort_helper(void *array, int left, int right, size_t elem_sz,
                              int (*cmp) (const void*, const void*));
+// Return 1 if first int is bigger, -1 if second int is bigger, 0 if same
+int int_cmp(const void *a, const void *b) {
+	int *first = (int *)a;
+	int *second = (int *)b;
+	if (*first > *second) {
+		return 1;
+	}
+	else if (*first < *second) {
+		return -1;
+	}
+	else {
+		return 0;
+	}
+}
+
+// Return 1 if first double is bigger, -1 if second double is bigger, 0 if same
+int dbl_cmp(const void *a, const void *b) {
+	double *first = (double *)a;
+	double *second = (double *)b;
+	if (*first > *second) {
+		return 1;
+	}
+	else if (*first < *second) {
+		return -1;
+	}
+	else {
+		return 0;
+	}
+}
+
+// Return 1 if first string is bigger, -1 if second string is bigger, 0 if same
+int str_cmp(const void *a, const void *b) {
+	char **first = (char **)a;
+	char **second = (char **)b;
+	if (strcmp(*first, *second) > 0) {
+		return 1;
+	}
+	else if (strcmp(*first, *second) < 0) {
+		return -1;
+	}
+	else {
+		return 0;
+	}
+}
+
+// Sort array using quicksort_helper
+void quicksort(void *array, size_t len, size_t elem_sz, int (*cmp) (const void*, const void*)) {
+	quicksort_helper(array, 0, len - 1, elem_sz, cmp);
+}
+
 
 /**
  * Swaps the values in two pointers.
@@ -21,7 +71,7 @@ static void swap(void *a, void *b, size_t size) {
     // TODO
     char *a_char = (char *)a;
     char *b_char = (char *)b;
-    char *temp = malloc(char *);
+    char *temp = NULL;
     for (int i = 0; i < size; i++) {
 	*temp = *a_char;
 	*a_char = *b_char;
@@ -29,7 +79,6 @@ static void swap(void *a, void *b, size_t size) {
 	a_char++;
 	b_char++;
     }
-    free(temp);
 }
 
 /**
@@ -41,6 +90,17 @@ static void swap(void *a, void *b, size_t size) {
 static int lomuto(void *array, int left, int right, size_t elem_sz,
                   int (*cmp) (const void*, const void*)) {
     // TODO
+    int *array_copy = (int *)array;
+    int *pivot = (int *)array;
+    int s = left;
+    for (int i = 0; i < left + 1; i++) {
+	if (*(array_copy + i * elem_sz) < *pivot) {
+		s++;
+		swap((array_copy + s * elem_sz), (array_copy + i * elem_sz), elem_sz);	
+	}
+    }
+    swap((array_copy + left * elem_sz), (array_copy + s * elem_sz), elem_sz);
+    return s;
 }
 
 /**
@@ -52,4 +112,10 @@ static int lomuto(void *array, int left, int right, size_t elem_sz,
 static void quicksort_helper(void *array, int left, int right, size_t elem_sz,
                              int (*cmp) (const void*, const void*)) {
     // TODO
+    if (left < right) {
+	int s = lomuto(array, left, right, elem_sz, cmp);
+	quicksort_helper(array, left, s - 1, elem_sz, cmp);
+	quicksort_helper(array, s + 1, right, elem_sz, cmp);
+
+    }
 }
