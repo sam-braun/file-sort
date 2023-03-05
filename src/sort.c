@@ -51,6 +51,7 @@ int main(int argc, char **argv) {
 	// tests for too many valid flags
 	if (dflag + iflag > 1) {
 		fprintf(stderr, "Error: Too many flags specified.\n");
+		return EXIT_FAILURE;
 	}
 
 	char buf[MAX_ELEMENTS][MAX_STRLEN];
@@ -59,7 +60,7 @@ int main(int argc, char **argv) {
 	// tests for invalid filename
 	if (optind == 1) {
 		
-		printf("inside optind == 1 loop");
+	//	printf("inside optind == 1 loop");
 
 		infile = fopen(argv[optind], "r");
 		if (infile == NULL) {
@@ -95,18 +96,20 @@ int main(int argc, char **argv) {
 		quicksort((void *) buf, MAX_ELEMENTS, MAX_STRLEN, dbl_cmp);
 	}
 	else if (iflag == 1) {
+		printf("right before iflag quicksort\n");
 		quicksort((void *) buf, MAX_ELEMENTS, MAX_STRLEN, int_cmp);
+		printf("right after iflag quicksort\n");
 	}
 	else {
 		quicksort((void *) buf, MAX_ELEMENTS, MAX_STRLEN, str_cmp);
 	}
 
-	fprintf(stdout, "%s", (char*) buf);
+//	fprintf(stdout, "%s", (char*) buf);
 
 
 	// prints buf to stdout and closes infile
 	fputs((const char *restrict) buf, stdout);
-	fflush(stdout);
+//	fflush(stdout);
 	fclose(infile);
 
 	return EXIT_SUCCESS;
