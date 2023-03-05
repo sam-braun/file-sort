@@ -27,7 +27,7 @@ int main(int argc, char **argv) {
 	opterr = 0; // equivalent to : in bash
 
 	while ((c = getopt(argc, argv, "di")) != -1) {
-		switch(c){
+		switch(c) {
 			case 'd':
 				dflag = 1;
 				break; // needed?
@@ -40,7 +40,6 @@ int main(int argc, char **argv) {
 			default:
 				return EXIT_FAILURE;
 		}
-	
 	}
 
 	// tests for multiple filenames
@@ -59,18 +58,29 @@ int main(int argc, char **argv) {
 	FILE *infile;
 	// tests for invalid filename
 	if (optind == 1) {
+		
+		printf("inside optind == 1 loop");
+
 		infile = fopen(argv[optind], "r");
 		if (infile == NULL) {
-			fprintf(stderr, "Error: Cannot open \'%s\'.%s.", argv[optind], strerror(errno));
+			fprintf(stderr, "Error: Cannot open \'%s\'. "
+					"%s.\n", argv[optind], strerror(errno));
 			return EXIT_FAILURE;
 		}
 	}
 	else {
 		infile = stdin;
+
+		printf("in infile = stdin line\n");
 	}
+
+	printf("passed error-checking\n");
 	
 	// when we do fgets, is there anything read into buf[i]? (what if loop is asking)
 	for (int i = 0; i < MAX_ELEMENTS && fgets(buf[i], MAX_STRLEN, infile) != NULL; i++) {
+		
+		printf("in fgets loop\n");
+
 		// replaces \n with \0 in strings
 		char *eoln = strchr(buf[i], '\n');
 		if (eoln != NULL) {
@@ -78,6 +88,8 @@ int main(int argc, char **argv) {
 		}
 	}
 
+	printf("passed fgets loop\n");
+	
 	// passing buf into quicksort
 	if (dflag == 1) {
 		quicksort((void *) buf, MAX_ELEMENTS, MAX_STRLEN, dbl_cmp);
@@ -89,8 +101,12 @@ int main(int argc, char **argv) {
 		quicksort((void *) buf, MAX_ELEMENTS, MAX_STRLEN, str_cmp);
 	}
 
+	fprintf(stdout, "%s", (char*) buf);
+
+
 	// prints buf to stdout and closes infile
-	fputs(buf, stdout);
+	fputs((const char *restrict) buf, stdout);
+	fflush(stdout);
 	fclose(infile);
 
 	return EXIT_SUCCESS;
