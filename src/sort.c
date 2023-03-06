@@ -78,16 +78,18 @@ int main(int argc, char **argv) {
 	printf("passed error-checking\n");
 	
 	// when we do fgets, is there anything read into buf[i]? (what if loop is asking)
-	for (int i = 0; i < MAX_ELEMENTS; i++) {
+	for (int i = 0; i < MAX_ELEMENTS && fgets(buf[i], MAX_STRLEN, infile) != NULL; i++) {
 		printf("in fgets loop\n");
+		
+		if (dflag + iflag == 0) {
 
-		// replaces \n with \0 in strings
-		while (fgets(buf[i], MAX_STRLEN, infile) != NULL) {
+			// replaces \n with \0 in strings
 			char *eoln = strchr(buf[i], '\n');
 			if (eoln != NULL) {
 				*eoln = '\0';
 			}
 		}
+
 		fprintf(stdout, "%s\n", (char *) buf[i]);
 	}
 
