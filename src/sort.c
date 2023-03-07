@@ -58,7 +58,7 @@ int main(int argc, char **argv) {
 
 	FILE *infile;
 	// tests for invalid filename
-	if (optind == 1) {
+	if ((optind == 2 && argc == 3) || (optind == 1 && argc == 2)) {
 		
 	//	printf("inside optind == 1 loop");
 
@@ -78,6 +78,7 @@ int main(int argc, char **argv) {
 	printf("passed error-checking\n");
 	
 	// when we do fgets, is there anything read into buf[i]? (what if loop is asking)
+	/*
 	for (int i = 0; i < MAX_ELEMENTS && fgets(buf[i], MAX_STRLEN, infile) != NULL; i++) {
 		
 		printf("in fgets loop\n");
@@ -87,6 +88,14 @@ int main(int argc, char **argv) {
 		if (eoln != NULL) {
 			*eoln = '\0';
 		}
+	}
+	*/
+	int i = 0;
+	while (i < MAX_ELEMENTS) {
+		if (fgets(buf[i], MAX_STRLEN, infile) == NULL) {
+			break;
+		}
+		i++;
 	}
 
 	printf("passed fgets loop\n");
