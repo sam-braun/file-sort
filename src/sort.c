@@ -78,7 +78,7 @@ int main(int argc, char **argv) {
 	printf("passed error-checking\n");
 	
 	// when we do fgets, is there anything read into buf[i]? (what if loop is asking)
-	/*
+	int j = 0;
 	for (int i = 0; i < MAX_ELEMENTS && fgets(buf[i], MAX_STRLEN, infile) != NULL; i++) {
 		
 		printf("in fgets loop\n");
@@ -88,8 +88,9 @@ int main(int argc, char **argv) {
 		if (eoln != NULL) {
 			*eoln = '\0';
 		}
+		j++;
 	}
-	*/
+	/*
 	int i = 0;
 	while (i < MAX_ELEMENTS) {
 		if (fgets(buf[i], MAX_STRLEN, infile) == NULL) {
@@ -97,34 +98,38 @@ int main(int argc, char **argv) {
 		}
 		//fprintf(stdout, "%s\n", buf[i]);
 		i++;
-	}
+	}*/
 
-	char buf_copy[i][MAX_STRLEN];
-	for (int k = 0; k <= i; k++) {
+	char buf_copy[j][MAX_STRLEN];
+	for (int k = 0; k <= j; k++) {
 		strcpy(buf_copy[k], buf[k]);
 	}
 
 	printf("passed fgets loop\n");
-	
+
+	for (int l = 0; l < j; l++) {
+			fprintf(stdout, "%s\n", buf_copy[l]);
+	}
+
 	// passing buf into quicksort
 	if (dflag == 1) {
 		quicksort((void *) buf, MAX_ELEMENTS, MAX_STRLEN, dbl_cmp);
 	}
 	else if (iflag == 1) {
 		printf("right before iflag quicksort\n");
-		quicksort((void *) buf_copy, i, MAX_STRLEN, int_cmp);
+		quicksort((void *) buf_copy, j, MAX_STRLEN, int_cmp);
 		printf("right after iflag quicksort\n");
 	}
 	else {
 		quicksort((void *) buf, MAX_ELEMENTS, MAX_STRLEN, str_cmp);
 	}
 
-	for (int l = 0; l <= i; i++) {
+	for (int l = 0; l < j; l++) {
 			fprintf(stdout, "%s\n", buf_copy[l]);
 	}
 
 	/*int j = 0;
-	while (*buf[j] != "\n") {
+	hile (*buf[j] != "\n") {
 		fprintf(stdout, "%s\n", buf[j]);
 	}*/
 
