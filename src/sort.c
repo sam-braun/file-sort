@@ -95,7 +95,13 @@ int main(int argc, char **argv) {
 		if (fgets(buf[i], MAX_STRLEN, infile) == NULL) {
 			break;
 		}
+		//fprintf(stdout, "%s\n", buf[i]);
 		i++;
+	}
+
+	char buf_copy[i][MAX_STRLEN];
+	for (int k = 0; k <= i; k++) {
+		strcpy(buf_copy[k], buf[k]);
 	}
 
 	printf("passed fgets loop\n");
@@ -106,18 +112,29 @@ int main(int argc, char **argv) {
 	}
 	else if (iflag == 1) {
 		printf("right before iflag quicksort\n");
-		quicksort((void *) buf, MAX_ELEMENTS, MAX_STRLEN, int_cmp);
+		quicksort((void *) buf_copy, i, MAX_STRLEN, int_cmp);
 		printf("right after iflag quicksort\n");
 	}
 	else {
 		quicksort((void *) buf, MAX_ELEMENTS, MAX_STRLEN, str_cmp);
 	}
 
+	for (int l = 0; l <= i; i++) {
+			fprintf(stdout, "%s\n", buf_copy[l]);
+	}
+
+	/*int j = 0;
+	while (*buf[j] != "\n") {
+		fprintf(stdout, "%s\n", buf[j]);
+	}*/
+
 //	fprintf(stdout, "%s", (char*) buf);
 
 
-	// prints buf to stdout and closes infile
-	fputs((const char *restrict) buf, stdout);
+// prints buf to stdout and closes infile
+
+	//	fputs((const char *restrict) buf, stdout);
+
 //	fflush(stdout);
 	fclose(infile);
 
