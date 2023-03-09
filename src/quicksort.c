@@ -99,6 +99,7 @@ static int lomuto(void *array, int left, int right, size_t elem_sz,
 	double *array_copy = (double *)array;
 	double *pivot = &array_copy[left];
     }
+
     else {
 	int *array_copy = (int *)array;
 	int *pivot = &array_copy[left];
