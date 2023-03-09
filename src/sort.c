@@ -80,20 +80,14 @@ int main(int argc, char **argv) {
 	// when we do fgets, is there anything read into buf[i]? (what if loop is asking)
 	int j = 0;
 	for (int i = 0; i < MAX_ELEMENTS && fgets(buf[i], MAX_STRLEN, infile) != NULL; i++) {
-		printf("in fgets loop\n");
 		
-		if (dflag + iflag == 0) {
+		printf("in fgets loop\n");
 
-			// replaces \n with \0 in strings
-			char *eoln = strchr(buf[i], '\n');
-			if (eoln != NULL) {
-				*eoln = '\0';
-			}
+		// replaces \n with \0 in strings
+		char *eoln = strchr(buf[i], '\n');
+		if (eoln != NULL) {
+			*eoln = '\0';
 		}
-<<<<<<< HEAD
-
-		fprintf(stdout, "%s\n", (char *) buf[i]);
-=======
 		j++;
 	}
 	/*
@@ -116,7 +110,6 @@ int main(int argc, char **argv) {
 		} else if (dflag == 1) {
 			double_copy[k] = atof(buf_copy[k]);
 		}
->>>>>>> testing
 	}
 
 	printf("passed fgets loop\n");
