@@ -142,4 +142,9 @@ static void quicksort_helper(void *array, int left, int right, size_t elem_sz,
 	quicksort_helper(array, left, s - 1, elem_sz, cmp);
 	quicksort_helper(array, s + 1, right, elem_sz, cmp);
     }
+    int *array_copy = (int *)array;
+    for (int i = 0; i < right + 1; i++) {
+	printf("%d, ", array_copy[i]);
+    }
+    printf("end of quicksort helper\n");
 }

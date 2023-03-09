@@ -83,10 +83,13 @@ int main(int argc, char **argv) {
 		
 		printf("in fgets loop\n");
 
+		printf("before eoln: %s\n", buf[j]);
+
 		// replaces \n with \0 in strings
 		char *eoln = strchr(buf[j], '\n');
 		if (eoln != NULL) {
 			*eoln = '\0';
+			printf("inside eoln\n");
 		}
 		//j++;
 	}
@@ -103,13 +106,13 @@ int main(int argc, char **argv) {
 	char buf_copy[j][MAX_STRLEN];
 	int int_copy[j];
 	double double_copy[j];
+	printf("value of j: %d\n", j);
 	for (int k = 0; k < j; k++) {
-		strcpy(buf_copy[k], buf[k]);
 		if (iflag == 1) {
-			int_copy[k] = atoi(buf_copy[k]);
+			int_copy[k] = atoi(buf[k]);
 			printf("%d\n", int_copy[k]);
 		} else if (dflag == 1) {
-			double_copy[k] = atof(buf_copy[k]);
+			double_copy[k] = atof(buf[k]);
 			printf("%f\n", double_copy[k]);
 		}
 		else {
