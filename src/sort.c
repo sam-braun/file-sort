@@ -101,8 +101,15 @@ int main(int argc, char **argv) {
 	}*/
 
 	char buf_copy[j][MAX_STRLEN];
+	int int_copy[j];
+	double double_copy[j];
 	for (int k = 0; k <= j; k++) {
 		strcpy(buf_copy[k], buf[k]);
+		if (iflag == 1) {
+			int_copy[k] = atoi(buf_copy[k]);
+		} else if (dflag == 1) {
+			double_copy[k] = atof(buf_copy[k]);
+		}
 	}
 
 	printf("passed fgets loop\n");
@@ -113,19 +120,27 @@ int main(int argc, char **argv) {
 
 	// passing buf into quicksort
 	if (dflag == 1) {
-		quicksort((void *) buf, MAX_ELEMENTS, MAX_STRLEN, dbl_cmp);
+		quicksort((void *) double_copy, j, MAX_STRLEN, dbl_cmp);
 	}
 	else if (iflag == 1) {
 		printf("right before iflag quicksort\n");
-		quicksort((void *) buf_copy, j, MAX_STRLEN, int_cmp);
+		quicksort((void *) int_copy, j, MAX_STRLEN, int_cmp);
 		printf("right after iflag quicksort\n");
 	}
 	else {
-		quicksort((void *) buf, MAX_ELEMENTS, MAX_STRLEN, str_cmp);
+		quicksort((void *) buf_copy, j, MAX_STRLEN, str_cmp);
 	}
 
 	for (int l = 0; l < j; l++) {
+		if (iflag == 1) {
+			fprintf(stdout, "%d\n", int_copy[l]);
+		}
+		else if (dflag == 1) {
+			fprintf(stdout, "%f\n", double_copy[l]);
+		}
+		else {
 			fprintf(stdout, "%s\n", buf_copy[l]);
+		}
 	}
 
 	/*int j = 0;
