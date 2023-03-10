@@ -79,16 +79,19 @@ int main(int argc, char **argv) {
 	
 	// when we do fgets, is there anything read into buf[i]? (what if loop is asking)
 	int j = 0;
-	for (int i = 0; i < MAX_ELEMENTS && fgets(buf[i], MAX_STRLEN, infile) != NULL; i++) {
+	for (j = 0; j < MAX_ELEMENTS && fgets(buf[j], MAX_STRLEN, infile) != NULL; j++) {
 		
 		printf("in fgets loop\n");
 
+		printf("before eoln: %s\n", buf[j]);
+
 		// replaces \n with \0 in strings
-		char *eoln = strchr(buf[i], '\n');
+		char *eoln = strchr(buf[j], '\n');
 		if (eoln != NULL) {
 			*eoln = '\0';
+			printf("inside eoln\n");
 		}
-		j++;
+		//j++;
 	}
 	/*
 	int i = 0;
@@ -100,42 +103,37 @@ int main(int argc, char **argv) {
 		i++;
 	}*/
 
-	
-	char str_buf_copy[j][MAX_STRLEN];
+	char buf_copy[j][MAX_STRLEN];
 	int int_copy[j];
 	double double_copy[j];
-	for (int k = 0; k <= j; k++) {
-		strcpy(str_buf_copy[k], buf[k]);
+	printf("value of j: %d\n", j);
+	for (int k = 0; k < j; k++) {
 		if (iflag == 1) {
 			int_copy[k] = atoi(buf[k]);
+			printf("%d\n", int_copy[k]);
 		} else if (dflag == 1) {
 			double_copy[k] = atof(buf[k]);
+			printf("%f\n", double_copy[k]);
+		}
+		else {
+			strcpy(buf_copy[k], buf[k]);
+			printf("%s\n", buf_copy[k]);
 		}
 	}
 
 	printf("passed fgets loop\n");
 
-	if (iflag == 1) {
-		for (int l = 0; l < j; l++) {
-                        fprintf(stdout, "%d\n", int_copy[l]);
-        	}
-	}
-//	for (int l = 0; l < j; l++) {
-//			fprintf(stdout, "%s\n", buf_copy[l]);
-//	}
-
 	// passing buf into quicksort
 	if (dflag == 1) {
-		quicksort((void *) double_copy, j, MAX_STRLEN, dbl_cmp);
+		quicksort((void *) double_copy, j, sizeof(double), dbl_cmp);
 	}
 	else if (iflag == 1) {
 		printf("right before iflag quicksort\n");
-		printf("j = %d\n", j);
-		quicksort((void *) int_copy, j, 4, int_cmp);
+		quicksort((void *) int_copy, j, sizeof(int), int_cmp);
 		printf("right after iflag quicksort\n");
 	}
 	else {
-		quicksort((void *) str_buf_copy, j, 8, str_cmp);
+		quicksort((void *) buf_copy, j, MAX_STRLEN, str_cmp);
 	}
 
 	for (int l = 0; l < j; l++) {
@@ -146,7 +144,7 @@ int main(int argc, char **argv) {
 			fprintf(stdout, "%f\n", double_copy[l]);
 		}
 		else {
-			fprintf(stdout, "%s\n", str_buf_copy[l]);
+			fprintf(stdout, "%s\n", buf_copy[l]);
 		}
 	}
 
