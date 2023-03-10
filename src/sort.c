@@ -54,7 +54,7 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 
-	char buf[MAX_ELEMENTS][MAX_STRLEN];
+	char buf[MAX_ELEMENTS][MAX_STRLEN + 1];
 
 	FILE *infile;
 	// tests for invalid filename
@@ -72,24 +72,24 @@ int main(int argc, char **argv) {
 	else {
 		infile = stdin;
 
-		printf("in infile = stdin line\n");
+		//printf("in infile = stdin line\n");
 	}
 
-	printf("passed error-checking\n");
+	//printf("passed error-checking\n");
 	
 	// when we do fgets, is there anything read into buf[i]? (what if loop is asking)
 	int j = 0;
-	for (j = 0; j < MAX_ELEMENTS && fgets(buf[j], MAX_STRLEN, infile) != NULL; j++) {
+	for (j = 0; j < MAX_ELEMENTS && fgets(buf[j], MAX_STRLEN + 1, infile) != NULL; j++) {
 		
-		printf("in fgets loop\n");
+		//printf("in fgets loop\n");
 
-		printf("before eoln: %s\n", buf[j]);
+		//printf("before eoln: %s\n", buf[j]);
 
 		// replaces \n with \0 in strings
 		char *eoln = strchr(buf[j], '\n');
 		if (eoln != NULL) {
 			*eoln = '\0';
-			printf("inside eoln\n");
+			//printf("inside eoln\n");
 		}
 		//j++;
 	}
@@ -103,39 +103,39 @@ int main(int argc, char **argv) {
 		i++;
 	}*/
 
-	char buf_copy[j][MAX_STRLEN];
+	char buf_copy[j][MAX_STRLEN + 1];
 	int int_copy[j];
 	double double_copy[j];
-	printf("value of j: %d\n", j);
+	//printf("value of j: %d\n", j);
 	for (int k = 0; k < j; k++) {
 		if (iflag == 1) {
 			int_copy[k] = atoi(buf[k]);
-			printf("%d\n", int_copy[k]);
+			//printf("%d\n", int_copy[k]);
 		} else if (dflag == 1) {
 			double_copy[k] = atof(buf[k]);
-			printf("%f\n", double_copy[k]);
+			//printf("%f\n", double_copy[k]);
 		}
 		else {
 			strcpy(buf_copy[k], buf[k]);
-			printf("%s\n", buf_copy[k]);
+			//printf("%s\n", buf_copy[k]);
 		}
 	}
 
-	printf("passed fgets loop\n");
+	//printf("passed fgets loop\n");
 
 	// passing buf into quicksort
 	if (dflag == 1) {
 		quicksort((void *) double_copy, j, sizeof(double), dbl_cmp);
 	}
 	else if (iflag == 1) {
-		printf("right before iflag quicksort\n");
+		//printf("right before iflag quicksort\n");
 		quicksort((void *) int_copy, j, sizeof(int), int_cmp);
-		printf("right after iflag quicksort\n");
+		//printf("right after iflag quicksort\n");
 	}
 	else {
-		quicksort((void *) buf_copy, j, MAX_STRLEN, str_cmp);
+		quicksort((void *) buf_copy, j, MAX_STRLEN + 1, str_cmp);
 	}
-
+	printf("j: %d\n", j);
 	for (int l = 0; l < j; l++) {
 		if (iflag == 1) {
 			fprintf(stdout, "%d\n", int_copy[l]);
