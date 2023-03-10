@@ -54,7 +54,7 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 
-	char buf[MAX_ELEMENTS][MAX_STRLEN + 1];
+	char buf[MAX_ELEMENTS][MAX_STRLEN + 2];
 
 	FILE *infile;
 	// tests for invalid filename
