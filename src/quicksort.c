@@ -108,7 +108,7 @@ static int lomuto(void *array, int left, int right, size_t elem_sz,
 //    pivot = &array[left];
 
     int s = left;
-    char *pivot = array_copy;
+    char *pivot = array_copy + left * elem_sz;
     for (int i = left + 1; i <= right; i++) {
 	/*
 	    if (*(array_copy + i * elem_sz) < *pivot) {
