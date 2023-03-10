@@ -131,11 +131,11 @@ int main(int argc, char **argv) {
 	else if (iflag == 1) {
 		printf("right before iflag quicksort\n");
 		printf("j = %d\n", j);
-		quicksort((void *) int_copy, j, MAX_STRLEN, int_cmp);
+		quicksort((void *) int_copy, j, 4, int_cmp);
 		printf("right after iflag quicksort\n");
 	}
 	else {
-		quicksort((void *) str_buf_copy, j, MAX_STRLEN, str_cmp);
+		quicksort((void *) str_buf_copy, j, 8, str_cmp);
 	}
 
 	for (int l = 0; l < j; l++) {
