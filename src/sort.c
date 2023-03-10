@@ -82,7 +82,7 @@ int main(int argc, char **argv) {
 		}
 	}
 	
-	char buf_copy[j][MAX_STRLEN + 1];
+	char buf_copy[j][MAX_STRLEN + 2];
 	int int_copy[j];
 	double double_copy[j];
 	for (int k = 0; k < j; k++) {
@@ -104,7 +104,7 @@ int main(int argc, char **argv) {
 		quicksort((void *) int_copy, j, sizeof(int), int_cmp);
 	}
 	else {
-		quicksort((void *) buf_copy, j, MAX_STRLEN + 1, str_cmp);
+		quicksort((void *) buf_copy, j, MAX_STRLEN + 2, str_cmp);
 	}
 
 	for (int l = 0; l < j; l++) {
