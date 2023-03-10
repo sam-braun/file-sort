@@ -59,8 +59,6 @@ int main(int argc, char **argv) {
 	FILE *infile;
 	// tests for invalid filename
 	if ((optind == 2 && argc == 3) || (optind == 1 && argc == 2)) {
-		
-	//	printf("inside optind == 1 loop");
 
 		infile = fopen(argv[optind], "r");
 		if (infile == NULL) {
@@ -71,71 +69,44 @@ int main(int argc, char **argv) {
 	}
 	else {
 		infile = stdin;
-
-		//printf("in infile = stdin line\n");
 	}
-
-	//printf("passed error-checking\n");
 	
 	// when we do fgets, is there anything read into buf[i]? (what if loop is asking)
 	int j = 0;
 	for (j = 0; j < MAX_ELEMENTS && fgets(buf[j], MAX_STRLEN + 1, infile) != NULL; j++) {
 		
-		//printf("in fgets loop\n");
-
-		//printf("before eoln: %s\n", buf[j]);
-
 		// replaces \n with \0 in strings
 		char *eoln = strchr(buf[j], '\n');
 		if (eoln != NULL) {
 			*eoln = '\0';
-			//printf("inside eoln\n");
 		}
-		//j++;
 	}
-	/*
-	int i = 0;
-	while (i < MAX_ELEMENTS) {
-		if (fgets(buf[i], MAX_STRLEN, infile) == NULL) {
-			break;
-		}
-		//fprintf(stdout, "%s\n", buf[i]);
-		i++;
-	}*/
-
+	
 	char buf_copy[j][MAX_STRLEN + 1];
 	int int_copy[j];
 	double double_copy[j];
-	//printf("value of j: %d\n", j);
 	for (int k = 0; k < j; k++) {
 		if (iflag == 1) {
 			int_copy[k] = atoi(buf[k]);
-			//printf("%d\n", int_copy[k]);
 		} else if (dflag == 1) {
 			double_copy[k] = atof(buf[k]);
-			//printf("%f\n", double_copy[k]);
 		}
 		else {
 			strcpy(buf_copy[k], buf[k]);
-			//printf("%s\n", buf_copy[k]);
 		}
 	}
-
-	//printf("passed fgets loop\n");
 
 	// passing buf into quicksort
 	if (dflag == 1) {
 		quicksort((void *) double_copy, j, sizeof(double), dbl_cmp);
 	}
 	else if (iflag == 1) {
-		//printf("right before iflag quicksort\n");
 		quicksort((void *) int_copy, j, sizeof(int), int_cmp);
-		//printf("right after iflag quicksort\n");
 	}
 	else {
 		quicksort((void *) buf_copy, j, MAX_STRLEN + 1, str_cmp);
 	}
-	printf("j: %d\n", j);
+
 	for (int l = 0; l < j; l++) {
 		if (iflag == 1) {
 			fprintf(stdout, "%d\n", int_copy[l]);
@@ -148,26 +119,9 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	/*int j = 0;
-	hile (*buf[j] != "\n") {
-		fprintf(stdout, "%s\n", buf[j]);
-	}*/
 
-//	fprintf(stdout, "%s", (char*) buf);
-
-
-// prints buf to stdout and closes infile
-
-	//	fputs((const char *restrict) buf, stdout);
-
-//	fflush(stdout);
 	fclose(infile);
 
 	return EXIT_SUCCESS;
 
-	// read data, takes in filename and outputs array
-        // replace \n with \0
-        //
-        // filestream?
-        // fputs string into a filestream: stdout, stdin, stderr, file itself
 }
