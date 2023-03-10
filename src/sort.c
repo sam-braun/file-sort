@@ -125,7 +125,7 @@ int main(int argc, char **argv) {
 
 	// passing buf into quicksort
 	if (dflag == 1) {
-		quicksort((void *) double_copy, j, MAX_STRLEN, dbl_cmp);
+		quicksort((void *) double_copy, j, sizeof(double), dbl_cmp);
 	}
 	else if (iflag == 1) {
 		printf("right before iflag quicksort\n");
