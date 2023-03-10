@@ -107,8 +107,8 @@ static int lomuto(void *array, int left, int right, size_t elem_sz,
 //    pivot = &array[left];
 
     int s = left;
-    char *pivot = array_copy;
-    for (int i = left + 1; i <= right; i++) {
+    char *pivot = array_copy + (left * elem_sz);
+    for (int i = left + 1; i <= right; i++) { //used to be i <= right
 	/*
 	    if (*(array_copy + i * elem_sz) < *pivot) {
 		s++;
@@ -116,7 +116,7 @@ static int lomuto(void *array, int left, int right, size_t elem_sz,
 	}
 	*/
 	    //fprintf(stderr, "%d\n", *pivot);
-	    if (cmp((array_copy + i * elem_sz), pivot) == -1) {
+	    if (cmp((array_copy + (i * elem_sz)), pivot) == -1) {
 		s++;
 		swap((array_copy + s * elem_sz), (array_copy + i * elem_sz), elem_sz);
 	    }
@@ -138,6 +138,10 @@ static void quicksort_helper(void *array, int left, int right, size_t elem_sz,
     int s;
     if (left < right) {
 	s = lomuto(array, left, right, elem_sz, cmp);
+	
+	printf("\n");
+	printf("s-value = %d\n", s);
+
 	quicksort_helper(array, left, s - 1, elem_sz, cmp);
 	quicksort_helper(array, s + 1, right, elem_sz, cmp);
     }
