@@ -54,7 +54,7 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 
-	char buf[MAX_ELEMENTS][MAX_STRLEN + 2];
+	char buf[MAX_ELEMENTS][MAX_STRLEN + 1]; // was previously +2
 
 	FILE *infile;
 	// tests for invalid filename
@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
 	
 	// when we do fgets, is there anything read into buf[i]? (what if loop is asking)
 	int j = 0;
-	for (j = 0; j < MAX_ELEMENTS && fgets(buf[j], MAX_STRLEN + 1, infile) != NULL; j++) {
+	for (j = 0; j < MAX_ELEMENTS && fgets(buf[j], MAX_STRLEN + 2, infile) != NULL; j++) {
 		
 		// replaces \n with \0 in strings
 		char *eoln = strchr(buf[j], '\n');
@@ -90,8 +90,7 @@ int main(int argc, char **argv) {
 			int_copy[k] = atoi(buf[k]);
 		} else if (dflag == 1) {
 			double_copy[k] = atof(buf[k]);
-		}
-		else {
+		} else {
 			strcpy(buf_copy[k], buf[k]);
 		}
 	}
